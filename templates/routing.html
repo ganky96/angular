@@ -1,72 +1,80 @@
-<br/><br/>
-<h1 align="center">Multipage Routing</h1>
-<h2 align="center">using AngularJS</h2>
-<br/><br/>
-<p>Multipage Routing in AngularJS requires you to do three things:
-    <ol>
-        <li>Inject the Dependencies</li>
-        <li>Set up the routes as states</li>
-        <li>Write your links to point to urls</li>
-    </ol>
-    Once you have done this, simply route to the url specified in the
-    state. Your routing is done. Too easy. 
-</p><br/>
-<h3>Part 1: Injecting Angular-UI-Routing</h3>
-<p> When defining your app module, you need to inject 'ui-router' as follows:
-    <br/><code>var app = angular.module("app", ['ui.router']);</code>
-</p>
-<p>Be sure to include <code>ng-view=""</code>wherever the new content is supposed to turn up (index.html for this webapp).<br/>
-    Also ensure that <code>&lt;script src="angular-ui-router.js"&gt;&lt;/script&gt</code> is included and that the version is atleast 0.4.0 or above.
-</p><br/>
-<h3>Part 2: Route Code within App.js</h3>
-<p>                
-    The actual routing code then requires the following (not sure if all those services need to be injected as well):<br/>
-</p>    
-<pre style="border: 1px dashed #ccc">
-    <code>
-        app.config(['$httpProvider', '$stateProvider', '$urlRouterProvider',
-            function($httpProvider, $stateProvider, $urlRouterProvider) {
+<div class="container">
+    <br/><br/>
+    <h1 align="center">Multipage Routing</h1>
+    <h2 align="center">using AngularJS</h2>
+    <br/><br/>
+    <p>Multipage Routing in AngularJS requires you to do three things:
+        <ol>
+            <li>Inject the Dependencies</li>
+            <li>Set up the routes as states</li>
+            <li>Write your links to point to urls</li>
+        </ol>
+        Once you have done this, simply route to the url specified in the
+        state. Your routing is done. Too easy.
+    </p><br/>
+    <div style="background-color:#eee; padding: 15px;">
+        <h3>Part 1: Injecting Angular-UI-Routing</h3>
+        <p> When defining your app module, you need to inject 'ui-router' as follows:
+            <br/><code>var app = angular.module("app", ['ui.router']);</code>
+        </p>
+        <p>Be sure to include <code>ng-view=""</code>wherever the new content is supposed to turn up (index.html for this webapp).<br/>
+            Also ensure that <code>&lt;script src="angular-ui-router.js"&gt;&lt;/script&gt</code> is included and that the version is atleast 0.4.0 or above.
+        </p><br/>
+        </div>
+    <div>
+        <h3>Part 2: Route Code within App.js</h3>
+        <p>
+            The actual routing code then requires the following (not sure if all those services need to be injected as well):<br/>
+        </p>
+        <pre style="border: 1px dashed #ccc">
+            <code>
+                app.config(['$httpProvider', '$stateProvider', '$urlRouterProvider',
+                    function($httpProvider, $stateProvider, $urlRouterProvider) {
 
-                $stateProvider
-                .state('home', {
-                    url: '/home',        
-                    templateUrl: 'templates/home.html',                                
-                    //abstract: true,
-                })
-                .state('routing', {
-                    url: '/routing',
-                    templateUrl: 'templates/routing.html',
-                    //controller: 'DashboardCtrl'
-                })
-                .state('structure', { 
-                    url: '/structure',
-                    //parent: 'home',
-                    templateUrl: 'templates/structure.html',
-                    //template: '&lt;h3&gt;structure&lt;/h3&gt;',
-                    //controller: 'CrmCtrl'
-                })
-                .state('version', {
-                    url: '/version',
-                    templateUrl: 'templates/version.html',
-                    //template: '&lt;h3&gt;version!&lt;/h3&gt;',
-                });
+                        $stateProvider
+                        .state('home', {
+                            url: '/home',
+                            templateUrl: 'templates/home.html',
+                            //abstract: true,
+                        })
+                        .state('routing', {
+                            url: '/routing',
+                            templateUrl: 'templates/routing.html',
+                            //controller: 'DashboardCtrl'
+                        })
+                        .state('structure', {
+                            url: '/structure',
+                            //parent: 'home',
+                            templateUrl: 'templates/structure.html',
+                            //template: '&lt;h3&gt;structure&lt;/h3&gt;',
+                            //controller: 'CrmCtrl'
+                        })
+                        .state('version', {
+                            url: '/version',
+                            templateUrl: 'templates/version.html',
+                            //template: '&lt;h3&gt;version!&lt;/h3&gt;',
+                        });
 
-                $urlRouterProvider.otherwise('home');
-            }
-            ]);
+                        $urlRouterProvider.otherwise('home');
+                    }
+                    ]);
+                </code>
+        </pre><br/>
+    </div>
+    <div>
+        <h3>Part 3: Linking</h3>
+        <p>Make sure that your navigator (or whatever you use to point to the different parts of your webapp) has the href value set to exactly what the 'url' value in the router config is set to in step 2 above.</p>
+        <p>For example:</p>
+        <pre style="border: 1px dashed #ccc">
+            <code>
+                &lt;div class="dropdown-menu"&gt;
+                    &lt;a class="dropdown-item" href="#!/version"&gt;Version Info&lt;/a&gt;
+                    &lt;a class="dropdown-item" href="#!/structure"&gt;Directory Structure&lt;/a&gt;
+                    &lt;a class="dropdown-item" href="#"&gt;Need something here&lt;/a&gt;
+                    &lt;div class="dropdown-divider"&gt;&lt;/div&gt;
+                    &lt;a class="dropdown-item" href="#!/vulns"&gt;Vulnerabilities&lt;/a&gt;
+                &lt;/div&gt;
             </code>
-    </pre><br/>
-    <h3>Part 3: Linking</h3>
-    <p>Make sure that your navigator (or whatever you use to point to the different parts of your webapp) has the href value set to exactly what the 'url' value in the router config is set to in step 2 above.</p>
-    <p>For example:</p>
-    <pre style="border: 1px dashed #ccc">
-        <code>
-            &lt;div class="dropdown-menu"&gt;
-                &lt;a class="dropdown-item" href="#!/version"&gt;Version Info&lt;/a&gt;
-                &lt;a class="dropdown-item" href="#!/structure"&gt;Directory Structure&lt;/a&gt;
-                &lt;a class="dropdown-item" href="#"&gt;Need something here&lt;/a&gt;
-                &lt;div class="dropdown-divider"&gt;&lt;/div&gt;
-                &lt;a class="dropdown-item" href="#!/vulns"&gt;Vulnerabilities&lt;/a&gt;
-            &lt;/div&gt;
-        </code>
-    </pre>
+        </pre>
+    </div>
+</div>
